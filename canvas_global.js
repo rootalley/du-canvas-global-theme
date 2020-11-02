@@ -4,9 +4,9 @@
 ////////////////////////////////////////////////////
 function DUParseCourseID() {
   "use strict";
-  const truncator = new RegExp('\/courses\/[1-9][0-9]*');
-  const path = truncator.exec(location.pathname);
-  return (path ? path[0].substring('/courses/'.length) : null);
+  const truncator = new RegExp(location.hostname + '\/courses\/[1-9][0-9]*');
+  const path = truncator.exec(location.href);
+  return (path ? path[0].substring((location.hostname + '/courses/').length) : null);
 }
 
 
