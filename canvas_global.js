@@ -3,7 +3,7 @@
 // AT Files/DU Theme/style.css WITHIN A COURSE    //
 ////////////////////////////////////////////////////
 function DUParseCourseID() {
-  "use strict";
+  'use strict';
   const truncator = new RegExp(location.hostname + '\/courses\/[1-9][0-9]*');
   const path = truncator.exec(location.href);
   return (path ? path[0].substring((location.hostname + '/courses/').length) : null);
@@ -13,11 +13,17 @@ function DUParseCourseID() {
 var coursenum = DUParseCourseID();
 
 if (coursenum) {
-  $("head").append($("<link/>", {
-    rel: "stylesheet",
-    type: "text/css",
-    href: "/courses/" + coursenum + "/file_contents/course%20files/DU%20Theme/style.css"
-  }));
+  try {
+    var cssPath = '/courses/' + coursenum + '/file_contents/course%20files/DU%20Theme/style.css';
+    var head = document.getElementsByTagName('HEAD')[0];
+    var linkElement = document.createElement('link');
+    linkElement.setAttribute('rel', 'stylesheet');
+    linkElement.setAttribute('type', 'text/css');
+    linkElement.setAttribute('href', cssPath);
+    head.appendChild(linkElement);
+  } catch(e) {
+    console.log('DU Theme (info): style.css not loaded');
+  }
 }
 ////////////////////////////////////////////////////
 // END COURSE CSS LOADER                          //
