@@ -10,20 +10,24 @@ function DUParseCourseID() {
 }
 
 
-var coursenum = DUParseCourseID();
-
-if (coursenum) {
+function DUAppendCssFileToDocumentHead(cssFile, documentHead) {
   try {
-    var cssPath = '/courses/' + coursenum + '/file_contents/course%20files/DU%20Theme/style.css';
-    var head = document.getElementsByTagName('HEAD')[0];
     var linkElement = document.createElement('link');
     linkElement.setAttribute('rel', 'stylesheet');
     linkElement.setAttribute('type', 'text/css');
-    linkElement.setAttribute('href', cssPath);
-    head.appendChild(linkElement);
-  } catch(e) {
+    linkElement.setAttribute('href', cssFile);
+    documentHead.appendChild(linkElement);
+  } catch (e) {
     console.log('DU Theme (info): style.css not loaded');
   }
+}
+
+
+var coursenum = DUParseCourseID();
+if (coursenum) {
+  var cssPath = '/courses/' + coursenum + '/file_contents/course%20files/DU%20Theme/style.css';
+  var head = document.getElementsByTagName('HEAD')[0];
+  DUAppendCssFileToDocumentHead(cssPath, head);
 }
 ////////////////////////////////////////////////////
 // END COURSE CSS LOADER                          //
@@ -96,11 +100,11 @@ var DT_variables = {
   // add users to array (Canvas user ID not SIS user ID)
   userArray: [
     '3460004', // Steven Endres
-    '388918',  // Ben Freville
+    '388918', // Ben Freville
     '1077550', // Grzegorz Kasprzycki
     '4200170', // Pratima Kshetry
-    '373546',  // Daniel Martin
-    '351869'   // Steve Plane
+    '373546', // Daniel Martin
+    '351869' // Steve Plane
   ]
 };
 
@@ -142,7 +146,7 @@ $(document).ready(function() {
   a.src = g;
   m.parentNode.insertBefore(a, m)
 })(window, document, 'script', 'https://www.google-analytics.com/analytics.js',
-   'ga');
+  'ga');
 
 $(document).ready(function() {
 
@@ -163,12 +167,12 @@ $(document).ready(function() {
 
 
   //Get User Role
-  if ($.inArray('admin', ENV['current_user_roles']) == -1
-      && $.inArray('teacher', ENV['current_user_roles']) == -1
-      && $.inArray('student', ENV['current_user_roles']) > -1) {
+  if ($.inArray('admin', ENV['current_user_roles']) == -1 &&
+    $.inArray('teacher', ENV['current_user_roles']) == -1 &&
+    $.inArray('student', ENV['current_user_roles']) > -1) {
     sUserRole = "student"
-  } else if ($.inArray('admin', ENV['current_user_roles']) == -1
-      && $.inArray('teacher', ENV['current_user_roles']) > -1) {
+  } else if ($.inArray('admin', ENV['current_user_roles']) == -1 &&
+    $.inArray('teacher', ENV['current_user_roles']) > -1) {
     sUserRole = "teacher"
   } else if ($.inArray('admin', ENV['current_user_roles']) > -1) {
     sUserRole = "admin"
