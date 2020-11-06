@@ -11,6 +11,7 @@ function DUParseCourseID() {
 
 
 function DUAppendCssFileToDocumentHead(cssFile, documentHead) {
+  'use strict';
   try {
     var linkElement = document.createElement('link');
     linkElement.setAttribute('rel', 'stylesheet');
@@ -25,10 +26,27 @@ function DUAppendCssFileToDocumentHead(cssFile, documentHead) {
 
 var coursenum = DUParseCourseID();
 if (coursenum) {
+  // add the CSS file to the main Canvas page
   var cssPath = '/courses/' + coursenum + '/file_contents/course%20files/DU%20Theme/style.css';
   var head = document.getElementsByTagName('HEAD')[0];
   DUAppendCssFileToDocumentHead(cssPath, head);
+
+  // if the page contains a Rich Content Editor, which is in an iframe, add the
+  // CSS to the iframe content as well
+  document.onreadystatechange = function () {
+    'use strict';
+    if (document.readyState != 'loading') {
+      var iframeList = document.getElementsByTagName("iframe");
+      for (let iframeItem of iframeList) {
+        if (iframeItem.id.slice(-4) === '_ifr') {
+          head = iframeItem.contentDocument.head;
+          DUAppendCssFileToDocumentHead(cssPath, head);
+        }
+      }
+    }
+  }
 }
+
 ////////////////////////////////////////////////////
 // END COURSE CSS LOADER                          //
 ////////////////////////////////////////////////////
@@ -77,7 +95,8 @@ var DT_variables = {
   hideButton: true,
 
   // OPTIONAL: Limit by course format
-  limitByFormat: false, // Change to true to limit by format
+  limitByFormat: false,
+  // Change to true to limit by format
   // Adjust the formats as needed. Format must be set for the course and in this
   // array for tools to load
   formatArray: [
@@ -87,7 +106,8 @@ var DT_variables = {
   ],
 
   // OPTIONAL: Limit tools loading by users role
-  limitByRole: false, // Set to true to limit to roles in the roleArray
+  limitByRole: false,
+  // Set to true to limit to roles in the roleArray
   // adjust roles as needed
   roleArray: [
     'student',
@@ -96,15 +116,16 @@ var DT_variables = {
   ],
 
   // OPTIONAL: Limit tools to an array of Canvas user IDs
-  limitByUser: true, // Set to true to limit by user/ false for everyone to use
+  limitByUser: true,
+  // Set to true to limit by user/ false for everyone to use
   // add users to array (Canvas user ID not SIS user ID)
   userArray: [
     '3460004', // Steven Endres
-    '388918', // Ben Freville
+    '388918',  // Ben Freville
     '1077550', // Grzegorz Kasprzycki
     '4200170', // Pratima Kshetry
-    '373546', // Daniel Martin
-    '351869' // Steve Plane
+    '373546',  // Daniel Martin
+    '351869'   // Steve Plane
   ]
 };
 
