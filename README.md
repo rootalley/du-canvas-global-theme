@@ -20,9 +20,9 @@ Contributors should use the typical git pull request workflow that is [outlined 
 1.  Always start by getting your local code and your forked code on GitHub to date with this repository:
 
     ```Shell
-    git checkout master;
-    git pull upstream master;
-    git push origin master;
+    git checkout main;
+    git pull upstream main;
+    git push origin main;
     ```
 
 2.  Now create a branch to work on your changes: `git checkout -b <branch_name>`.
@@ -33,12 +33,12 @@ Contributors should use the typical git pull request workflow that is [outlined 
     git commit -m "A nice message describing the change"
     ```
 4.  Push your changes to your fork on GitHub: `git push origin <branch_name>`.
-5.  Login to GitHub and open a pull request against `rootalley/master`. Be sure to give the pull request a nice title and description.
+5.  Login to GitHub and open a pull request against `rootalley/main`. Be sure to give the pull request a nice title and description.
 6.  Once your pull request has been merged, you can delete your branch:
 
     ```Shell
-    git checkout master;
-    git pull upstream master;
+    git checkout main;
+    git pull upstream main;
     git branch -d <branch_name>;
-    git push origin master;
+    git push origin main;
     ```
