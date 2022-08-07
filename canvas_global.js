@@ -72,31 +72,3 @@ if (coursenum) {
 ////////////////////////////////////////////////////////////////////////////////
 // END COURSE CSS LOADER                                                      //
 ////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////
-// EXTERNAL TOOLS CONFIG IN RICH CONTENT EDITOR   //
-////////////////////////////////////////////////////
-function iconSort(a, b) {
-  var aPos = sortOrder.indexOf(a.name);
-  var bPos = sortOrder.indexOf(b.name);
-  var order;
-
-  if (aPos === bPos) {
-    order = 0;
-  } else if (aPos > -1 && bPos > -1) {
-    order = aPos > bPos ? 1 : -1;
-  } else {
-    order = aPos > -1 ? -1 : 1;
-  }
-
-  return order;
-}
-
-
-var sortOrder = ['Course Video', 'YouTube', 'Vimeo'];
-INST.editorButtons.sort(iconSort);
-////////////////////////////////////////////////////
-// END EXTERNAL TOOLS CONFIG                      //
-////////////////////////////////////////////////////
