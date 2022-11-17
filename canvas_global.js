@@ -10,6 +10,7 @@
  *  @returns {(number|null)} The current course ID or null if not in a course.
  */
 function DUParseCourseID() {
+    "use strict";
     const truncator = new RegExp(location.hostname + '\/courses\/[1-9][0-9]*');
     const path = truncator.exec(location.href);
     return (path ? path[0].substring((location.hostname + '/courses/').length) : null);
@@ -35,7 +36,7 @@ function DUParseCourseID() {
  *  that web page.
  */
 function DUAppendCssFileToDocumentHead(cssFile, documentHead) {
-    'use strict';
+    "use strict";
     try {
         var linkElement = document.createElement('link');
         linkElement.setAttribute('rel', 'stylesheet');
@@ -59,7 +60,7 @@ function DULoadCSSFile(coursenum) {
 
     /* if the page has a Rich Content Editor iframe, add the CSS there as well */
     document.onreadystatechange = function () {
-        'use strict';
+        "use strict";
         if (document.readyState != 'loading') {
             var iframeList = document.getElementsByTagName("iframe");
             for (let iframeItem of iframeList) {
@@ -69,7 +70,7 @@ function DULoadCSSFile(coursenum) {
                 }
             }
         }
-    }
+    };
 }
 
 
@@ -98,11 +99,10 @@ if (coursenum) {
 
 
 /**
- *  Add the CTLE option to the global navigation menu if the current user is
- *  enrolled in the CTLE Faculty Forum course.
+ *  Add the CTLE option to the global navigation menu.
  */
 function DUAddCtleToGlobalNavigation() {
-    'use strict;'
+    "use strict";
     let new_nav_item = document.createElement("li");
     new_nav_item.innerHTML= '<li class="ic-app-header__menu-list-item">' +
                                 '<a id="global_nav_ctle_link" role="button" class="ic-app-header__menu-list-link" data-track-category="help system" data-track-label="help button" href="' + location.origin +'/courses/1292000">' +
@@ -119,7 +119,22 @@ function DUAddCtleToGlobalNavigation() {
         global_nav_courses_item.after(new_nav_item);
     }
 }
-DUAddCtleToGlobalNavigation()
+
+
+/**
+ *  CTLE Global Nav Tool Implementation:
+ *    - If the current user is enrolled in the CTLE Faculty Forum course, add
+ *      the CTLE menu item to the global navigation menu.
+ */
+let url = location.origin + "/api/v1/users/self/enrollments?role[]=CTLE-Participant&role[]=CTLE-Owner";
+fetch(url)
+.then((response) => response.json())
+.then(function(enrollments) {
+    if (enrollments.length > 0) {
+        DUAddCtleToGlobalNavigation();
+    }
+});
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // END CTLE GLOBAL NAV TOOL                                                   //
